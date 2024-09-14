@@ -17,12 +17,19 @@ export default async function handleRequest(
   remixContext,
   context,
 ) {
+  console.log('handleRequest==============================>');
   const {nonce, header, NonceProvider} = createContentSecurityPolicy({
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
-    frameAncestors: ["'self'", 'http://localhost:*', 'ws://localhost:*', '*'],
+    frameAncestors: [
+      "'self'",
+      'https://accounts.shopify.com',
+      'http://localhost:*',
+      'ws://localhost:*',
+      '*',
+    ],
   });
 
   const body = await renderToReadableStream(
@@ -45,6 +52,7 @@ export default async function handleRequest(
 
   responseHeaders.set('Content-Type', 'text/html');
   responseHeaders.set('Content-Security-Policy', header);
+  console.log('header', header);
 
   return new Response(body, {
     headers: responseHeaders,
