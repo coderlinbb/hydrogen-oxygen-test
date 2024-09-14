@@ -26,6 +26,8 @@ export default async function handleRequest(
     frameAncestors: [
       "'self'",
       'https://accounts.shopify.com',
+      'https://*.shopify.com',
+      'https://*.*.com',
       'http://localhost:*',
       'ws://localhost:*',
       '*',
